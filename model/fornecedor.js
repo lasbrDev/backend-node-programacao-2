@@ -1,38 +1,35 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../config/database.js";
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../config/database.js';
 
-export const Cliente = sequelize.define('Cliente', {
+
+export const Fornecedor = sequelize.define('Fornecedor', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    cpf: {
+    cnpj: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    nomeCompleto: {
+    razaoSocial: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    endereco: { 
+    telefone: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    cidade: {
+    email: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    estado: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    cep: {
+    endereco: {
         type: DataTypes.STRING,
         allowNull: false
     }
 },
 {
-    tableName: 'clientes',
+    tableName: 'fornecedores',
     timestamps: false
 });
