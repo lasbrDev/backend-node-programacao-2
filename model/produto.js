@@ -1,38 +1,34 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database";
 
-export const Cliente = sequelize.define('Cliente', {
+export const Produto = sequelize.define('Produto', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    cpf: {
+    codigo: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    nome: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    nomeCompleto: {
-        type: DataTypes.STRING,
+    preco: {
+        type: DataTypes.FLOAT,
         allowNull: false
     },
-    endereco: { 
+    descricao: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
-    cidade: {
-        type: DataTypes.STRING,
+    estoque: {
+        type: DataTypes.INTEGER,
         allowNull: false
-    },
-    estado: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    cep: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
+    },  
 },
 {
-    tableName: 'clientes',
+    tableName: 'produtos',
     timestamps: false
 });
