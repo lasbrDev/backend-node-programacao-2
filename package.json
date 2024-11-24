@@ -1,0 +1,22 @@
+{
+  "name": "atividade-bimestral-progii-backend",
+  "version": "1.0.0",
+  "main": "API REST Backend Nodejs Atividade Programação II",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "backend",
+    "node"
+  ],
+  "author": "Luciano Alves",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "atividade-bimestral-progii-backend": "file:"
+  }
+}
