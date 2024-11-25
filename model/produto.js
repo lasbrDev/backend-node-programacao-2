@@ -1,34 +1,52 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 
-export const Produto = sequelize.define('Produto', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+export const Produto = sequelize.define(
+    "Produto",
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        codigo: {
+            type: DataTypes.STRING(10), 
+            allowNull: false,
+            unique: true,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        nome: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        preco: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+            validate: {
+                isFloat: true, 
+                min: 0, 
+            },
+        },
+        descricao: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        estoque: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                isInt: true,
+                min: 0, 
+            },
+        },
     },
-    codigo: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    nome: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    preco: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    descricao: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    estoque: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },  
-},
-{
-    tableName: 'produtos',
-    timestamps: false
-});
+    {
+        tableName: "produtos",
+        timestamps: false,
+    }
+);
