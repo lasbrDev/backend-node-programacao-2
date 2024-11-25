@@ -1,4 +1,4 @@
-import { Produto } from "../model/produto";
+import { Produto } from "../model/produto.js";
 
 const handleError = (res, error, status = 500) => {
     res.status(status).json({ error: error.message || error });

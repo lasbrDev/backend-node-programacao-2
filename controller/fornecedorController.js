@@ -1,4 +1,4 @@
-import { Fornecedor } from "../model/fornecedor";
+import { Fornecedor } from "../model/fornecedor.js";
 
 const handleError = (res, error, status = 500) => {
     res.status(status).json({ error: error.message || error });

@@ -1,4 +1,4 @@
-import { Cliente } from "../model/cliente";
+import { Cliente } from "../model/cliente.js";
 
 const handleError = (res, error, status = 500) => {
     res.status(status).json({ error: error.message || error });

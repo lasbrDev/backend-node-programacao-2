@@ -1,6 +1,6 @@
-import { sequelize } from "./config/database";
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
+import { sequelize } from "./config/database.js";
 //import clienteRoutes from "./routes/clienteRoutes.js";
 
 dotenv.config();
