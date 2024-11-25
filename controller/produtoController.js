@@ -15,7 +15,7 @@ export const cadastrarProduto = async (req, res) => {
         const produto = await Produto.create({ codigo, nome, preco, descricao, estoque });
         res.status(201).json(produto);
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };
 
@@ -28,9 +28,9 @@ export const listarProdutos = async (req, res) => {
         offset: parseInt(offset),
         limit: parseInt(limit)
     });
-    res.status(200).json({ count, rows });
+    res.status(200).json({ total:count, produtos: rows });
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };
 
@@ -47,7 +47,7 @@ export const atualizarCliente = async (req, res) => {
         await produto.update({ codigo, nome, preco, descricao, estoque });
         res.status(200).json(produto);
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };
 
@@ -63,6 +63,6 @@ export const excluirProduto = async (req, res) => {
         await produto.destroy();
         res.status(200).json({ message: 'Produto excluido com sucesso' });
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };

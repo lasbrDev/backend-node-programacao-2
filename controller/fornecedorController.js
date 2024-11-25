@@ -15,7 +15,7 @@ export const cadastrarFornecedor = async (req, res) => {
         const fornecedor = await Fornecedor.create({ cnpj, razaoSocial, telefone, email, endereco });
         res.status(201).json(fornecedor);
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };
 
@@ -29,9 +29,9 @@ export const listarFornecedores = async (req, res) => {
             limit: parseInt(limit)
         });
 
-        res.status(200).json({ count, rows });
+        res.status(200).json({ total: count, fornecedores: rows });
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };
 
@@ -48,7 +48,7 @@ export const atualizarFornecedor = async (req, res) => {
         await fornecedor.update({ cnpj, razaoSocial, telefone, email, endereco });
         res.status(200).json(fornecedor);
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };
 
@@ -60,10 +60,10 @@ export const excluirFornecedor = async (req, res) => {
         if (!fornecedor) {
             return res.status(404).json({ error: 'Fornecedor não encontrado' });
         }
-        
+
         await fornecedor.destroy();
         res.status(200).json({ message: 'Fornecedor excluido com sucesso' });
     } catch (error) {
-        return handleError(res, error);
+        handleError(res, error);
     }
 };
