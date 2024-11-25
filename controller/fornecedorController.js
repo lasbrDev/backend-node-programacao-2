@@ -55,10 +55,12 @@ export const atualizarFornecedor = async (req, res) => {
 export const excluirFornecedor = async (req, res) => {
     try {
         const { id } = req.params;
+
         const fornecedor = await Fornecedor.findByPk(id);
         if (!fornecedor) {
             return res.status(404).json({ error: 'Fornecedor não encontrado' });
         }
+        
         await fornecedor.destroy();
         res.status(200).json({ message: 'Fornecedor excluido com sucesso' });
     } catch (error) {
