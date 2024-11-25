@@ -1,16 +1,25 @@
-import { sequelize } from "./config/database.js";
+import { sequelize } from "./config/database";
 import express from "express";
+import dotenv from "dotenv";
+//import clienteRoutes from "./routes/clienteRoutes.js";
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.APP_PORT || 4000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-sequelize.async().then(() => {
-    app.listen(3000, () => {
-        console.log("Server is running on port 3000");
+//app.use("/api/clientes", clienteRoutes);
+
+sequelize.sync()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error("Unable to connect to the database:", err);
+        process.exit(1);
     });
-}).catch(err => {
-    console.error("Unable to connect to the database:", err);
-    process.exit(1);
-});

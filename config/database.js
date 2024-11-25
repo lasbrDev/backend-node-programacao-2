@@ -1,35 +1,24 @@
-import mysql from 'mysql2/promise';
 import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
-let pool;
+dotenv.config();
 
-export async function conectar() {
-    if (pool) {
-        return await pool.getConnection();
-    } else {
-        pool = await mysql.createPool({
-            host: '192.168.15.50',
-            port: 33306,
-            user: 'root',
-            password: password,
-            database: 'gerenciador_db',
-            waitForConnections: true,
-            connectionLimit: 10,
-            maxIdle: 10,
-            idleTimeout: 60000,
-            queueLimit: 0,
-            ebableKeepAlive: true,
-            keepAliveInitialDelay: 0
-        });
-        return await pool.getConnection();
+export const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        dialect: 'mysql',
+        pool: {
+            max: 10,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        },
+        define: {
+            timestamps: false
+        }
     }
-}
-
-export const sequelize = new Sequelize('gerenciador_db', 'root', password, {
-    host: '192.168.15.50',
-    port: 33306,
-    dialect: 'mysql',
-    define: {
-        timestamps: false
-    }
-});
+);
