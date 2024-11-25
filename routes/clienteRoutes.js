@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validationResult } from "express-validator";
-import { atualizarCliente, cadastrarCliente, excluirCliente, listarClientes } from "../controller/clienteController";
-import { clienteValidationRules } from "../validations/clienteValidation";
+import { atualizarCliente, cadastrarCliente, excluirCliente, listarClientes } from "../controller/clienteController.js";
+import { clienteValidationRules } from "../validations/clienteValidation.js";
 
 const router = Router(); 
 

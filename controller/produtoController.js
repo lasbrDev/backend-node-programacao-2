@@ -34,7 +34,7 @@ export const listarProdutos = async (req, res) => {
     }
 };
 
-export const atualizarCliente = async (req, res) => {
+export const atualizarProduto = async (req, res) => {
     try {
         const { id } = req.params;
         const { codigo, nome, preco, descricao, estoque } = req.body;
