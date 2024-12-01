@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { validationResult } from 'express-validator';
-import { atualizarProduto, cadastrarProduto, excluirProduto, consultarProdutos, atualizarProdutoParcial } from '../controller/produtoController.js';
-import { produtoValidatorRules } from '../validator/produtoValidator.js';
+import { Router } from "express";
+import { validationResult } from "express-validator";
+import { atualizarProduto, atualizarProdutoParcial, cadastrarProduto, consultarProdutos, excluirProduto } from "../controller/produtoController.js";
+import { produtoValidatorRules } from "../validator/produtoValidator.js";
 
-const router = Router();
+const router = Router(); 
 
 const validateRequest = (req, res, next) => {
     const errors = validationResult(req);
@@ -18,7 +18,7 @@ const validateRequest = (req, res, next) => {
 router.post("/", produtoValidatorRules, validateRequest, cadastrarProduto);
 router.get("/", consultarProdutos);
 router.put("/:id", produtoValidatorRules, validateRequest, atualizarProduto);
-router.patch("/:id", produtoValidatorRules, validateRequest, atualizarProdutoParcial);
+router.patch("/:id", produtoValidatorRules, validateRequest, atualizarProdutoParcial); // Adicionado para aceitar PATCH
 router.delete("/:id", excluirProduto);
 
 export default router;

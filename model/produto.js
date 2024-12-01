@@ -32,6 +32,10 @@ export const Produto = sequelize.define(
                 min: 0, 
             },
         },
+        categoria: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         descricao: {
             type: DataTypes.TEXT,
             allowNull: true,

@@ -9,11 +9,15 @@ export const produtoValidatorRules = [
         .notEmpty().withMessage("Nome do produto é obrigatório")
         .isString().withMessage("Nome deve ser uma string"),
     
+    body("descricao")
+        .optional() 
+        .isString().withMessage("Descrição deve ser uma string"),
+    
     body("preco")
         .notEmpty().withMessage("Preço é obrigatório")
         .isFloat({ gt: 0 }).withMessage("Preço deve ser um número positivo"),
     
-    body("descricao")
+    body("categoria")
         .optional() 
         .isString().withMessage("Descrição deve ser uma string"),
     
