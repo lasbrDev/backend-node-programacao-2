@@ -19,7 +19,7 @@ export const cadastrarFornecedor = async (req, res) => {
     }
 };
 
-export const listarFornecedores = async (req, res) => {
+export const consultarFornecedores = async (req, res) => {
     try {
         const { page = 1, limit = 10 } = req.query;
         const offset = (page - 1) * limit;
@@ -30,6 +30,23 @@ export const listarFornecedores = async (req, res) => {
         });
 
         res.status(200).json({ total: count, fornecedores: rows });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+export const atualizarFornecedorParcial = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+
+        const fornecedor = await Fornecedor.findByPk(id);
+        if (!fornecedor) {
+            return res.status(404).json({ error: 'Fornecedor não encontrado' });
+        }
+
+        await fornecedor.update(updates);
+        res.status(200).json(fornecedor);
     } catch (error) {
         handleError(res, error);
     }
@@ -62,7 +79,7 @@ export const excluirFornecedor = async (req, res) => {
         }
 
         await fornecedor.destroy();
-        res.status(200).json({ message: 'Fornecedor excluido com sucesso' });
+        res.status(200).json({ message: 'Fornecedor excluído com sucesso' });
     } catch (error) {
         handleError(res, error);
     }

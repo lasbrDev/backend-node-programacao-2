@@ -18,7 +18,7 @@ const validateRequest = (req, res, next) => {
 router.post("/", produtoValidatorRules, validateRequest, cadastrarProduto);
 router.get("/", consultarProdutos);
 router.put("/:id", produtoValidatorRules, validateRequest, atualizarProduto);
-router.patch("/:id", produtoValidatorRules, validateRequest, atualizarProdutoParcial); // Adicionado para aceitar PATCH
+router.patch("/:id", produtoValidatorRules, validateRequest, atualizarProdutoParcial); 
 router.delete("/:id", excluirProduto);
 
 export default router;
