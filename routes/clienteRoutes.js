@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validationResult } from "express-validator";
-import { atualizarCliente, cadastrarCliente, excluirCliente, listarClientes } from "../controller/clienteController.js";
-import { clienteValidationRules } from "../validations/clienteValidation.js";
+import { atualizarCliente, atualizarClienteParcial, cadastrarCliente, consultarClientes, excluirCliente } from "../controller/clienteController.js";
+import { clienteValidatorRules } from "../validator/clienteValidator.js";
 
 const router = Router(); 
 
@@ -15,9 +15,10 @@ const validateRequest = (req, res, next) => {
     next();
 };
 
-router.post("/cliente", clienteValidationRules, validateRequest, cadastrarCliente);
-router.get("/cliente", listarClientes);
-router.patch("/cliente/:id", clienteValidationRules, validateRequest, atualizarCliente);
-router.delete("/cliente/:id", excluirCliente);
+router.post("/", clienteValidatorRules, validateRequest, cadastrarCliente);
+router.get("/", consultarClientes);
+router.put("/:id", clienteValidatorRules, validateRequest, atualizarCliente);
+router.patch("/:id", clienteValidatorRules, validateRequest, atualizarClienteParcial); 
+router.delete("/:id", excluirCliente);
 
 export default router;

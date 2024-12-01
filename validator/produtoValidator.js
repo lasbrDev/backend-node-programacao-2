@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const produtoValidationRules = [
+export const produtoValidatorRules = [
     body("codigo")
         .notEmpty().withMessage("Código do produto é obrigatório")
         .isLength({ max: 10 }).withMessage("Código não pode ter mais de 10 caracteres"),

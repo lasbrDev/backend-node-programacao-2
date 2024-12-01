@@ -9,7 +9,7 @@ export const cadastrarCliente = async (req, res) => {
         const { cpf, nomeCompleto, endereco, cidade, estado, cep } = req.body;
 
         if (!cpf || !nomeCompleto || !endereco || !cidade || !estado || !cep) {
-            return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+            return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
         }
 
         const cliente = await Cliente.create({ cpf, nomeCompleto, endereco, cidade, estado, cep });
@@ -19,17 +19,17 @@ export const cadastrarCliente = async (req, res) => {
     }
 };
 
-export const listarClientes = async (req, res) => {
+export const consultarClientes = async (req, res) => {
     try {
         const { page = 1, limit = 10 } = req.query;
         const offset = (page - 1) * limit;
 
         const { count, rows } = await Cliente.findAndCountAll({
-        offset: parseInt(offset),
-        limit: parseInt(limit)
-    });
+            offset: parseInt(offset),
+            limit: parseInt(limit)
+        });
 
-    res.status(200).json({ total: count, clientes: rows });
+        res.status(200).json({ total: count, clientes: rows });
     } catch (error) {
         handleError(res, error);
     }
@@ -42,7 +42,7 @@ export const atualizarCliente = async (req, res) => {
 
         const cliente = await Cliente.findByPk(id);
         if (!cliente) {
-            return res.status(404).json({ error: 'Cliente não encontrado' });
+            return res.status(404).json({ error: 'Cliente não encontrado' });
         }
 
         await cliente.update({ cpf, nomeCompleto, endereco, cidade, estado, cep });
@@ -52,17 +52,33 @@ export const atualizarCliente = async (req, res) => {
     }
 };
 
-export const excluirCliente = async (req, res) => {
+export const atualizarClienteParcial = async (req, res) => {
     try {
         const { id } = req.params;
+        const updates = req.body;
 
         const cliente = await Cliente.findByPk(id);
         if (!cliente) {
-            return res.status(404).json({ error: 'Cliente não encontrado' });
+            return res.status(404).json({ error: 'Cliente não encontrado' });
+        }
+
+        await cliente.update(updates);
+        res.status(200).json(cliente);
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+export const excluirCliente = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const cliente = await Cliente.findByPk(id);
+        if (!cliente) {
+            return res.status(404).json({ error: 'Cliente não encontrado' });
         }
 
         await cliente.destroy();
-        res.status(200).json({ message: 'Cliente excluido com sucesso' });
+        res.status(200).json({ message: 'Cliente excluído com sucesso' });
     } catch (error) {
         handleError(res, error);
     }

@@ -1,9 +1,9 @@
-import { Routes } from 'express';
+import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import { atualizarFornecedor, cadastrarFornecedor, excluirFornecedor, listarFornecedores } from '../controller/fornecedorController.js';
-import { fornecedorValidationRules } from '../validator/fornecedorValidator.js';
+import { fornecedorValidatorRules } from '../validator/fornecedorValidator.js';
 
-const router = Routes();
+const router = Router();
 
 const validateRequest = (req, res, next) => {
     const errors = validationResult(req);
@@ -15,9 +15,9 @@ const validateRequest = (req, res, next) => {
     next();
 };
 
-router.get('/fornecedores', listarFornecedores);
-router.post('/fornecedor', fornecedorValidationRules, validateRequest, cadastrarFornecedor);
-router.patch('/fornecedor/:id', fornecedorValidationRules, validateRequest, atualizarFornecedor);
-router.delete('/fornecedor/:id', excluirFornecedor);
+router.get("/", listarFornecedores);
+router.post("/", fornecedorValidatorRules, validateRequest, cadastrarFornecedor);
+router.patch("/:id", fornecedorValidatorRules, validateRequest, atualizarFornecedor);
+router.delete("/:id", excluirFornecedor);
 
 export default router;

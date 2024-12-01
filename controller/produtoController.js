@@ -19,7 +19,7 @@ export const cadastrarProduto = async (req, res) => {
     }
 };
 
-export const listarProdutos = async (req, res) => {
+export const consultarProdutos = async (req, res) => {
     try {
         const { page = 1, limit = 10 } = req.query;
         const offset = (page - 1) * limit;
@@ -45,6 +45,23 @@ export const atualizarProduto = async (req, res) => {
         }
 
         await produto.update({ codigo, nome, preco, descricao, estoque });
+        res.status(200).json(produto);
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+export const atualizarProdutoParcial = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+
+        const produto = await Produto.findByPk(id);
+        if (!produto) {
+            return res.status(404).json({ error: 'Produto não encontrado' });
+        }
+
+        await produto.update(updates);
         res.status(200).json(produto);
     } catch (error) {
         handleError(res, error);

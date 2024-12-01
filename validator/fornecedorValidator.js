@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const fornecedorValidationRules = [
+export const fornecedorValidatorRules = [
     body("cnpj")
         .notEmpty().withMessage("CNPJ é obrigatório")
         .matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/).withMessage("CNPJ deve estar no formato 00.000.000/0000-00"),
