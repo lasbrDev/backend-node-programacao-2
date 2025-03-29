@@ -61,6 +61,215 @@ Esta API fornece endpoints para gerenciar clientes, fornecedores e produtos. As 
 
 - **MySQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
 
+## Diagramas do Projeto
+
+### Diagrama de Classes
+
+```mermaid
+classDiagram
+    class App {
+    }
+
+    class ClienteController {
+        +cadastrarCliente(req, res)
+        +consultarClientes(req, res)
+        +atualizarCliente(req, res)
+        +atualizarClienteParcial(req, res)
+        +excluirCliente(req, res)
+    }
+
+    class FornecedorController {
+        +cadastrarFornecedor(req, res)
+        +consultarFornecedores(req, res)
+        +atualizarFornecedor(req, res)
+        +atualizarFornecedorParcial(req, res)
+        +excluirFornecedor(req, res)
+    }
+
+    class ProdutoController {
+        +cadastrarProduto(req, res)
+        +consultarProdutos(req, res)
+        +atualizarProduto(req, res)
+        +atualizarProdutoParcial(req, res)
+        +excluirProduto(req, res)
+    }
+
+    class ClienteRoutes {
+        +post("/")
+        +get("/")
+        +put("/:id")
+        +patch("/:id")
+        +delete("/:id")
+    }
+
+    class FornecedorRoutes {
+        +post("/")
+        +get("/")
+        +put("/:id")
+        +patch("/:id")
+        +delete("/:id")
+    }
+
+    class ProdutoRoutes {
+        +post("/")
+        +get("/")
+        +put("/:id")
+        +patch("/:id")
+        +delete("/:id")
+    }
+
+    class Cliente {
+        -id: INTEGER
+        -cpf: STRING
+        -nomeCompleto: STRING
+        -endereco: STRING
+        -cidade: STRING
+        -estado: STRING
+        -cep: STRING
+    }
+
+    class Fornecedor {
+        -id: INTEGER
+        -cnpj: STRING
+        -razaoSocial: STRING
+        -telefone: STRING
+        -email: STRING
+        -endereco: STRING
+    }
+
+    class Produto {
+        -id: INTEGER
+        -codigo: STRING
+        -nome: STRING
+        -descricao: STRING
+        -preco: FLOAT
+        -categoria: STRING
+        -estoque: INTEGER
+    }
+
+    App --> ClienteRoutes
+    App --> FornecedorRoutes
+    App --> ProdutoRoutes
+
+    ClienteRoutes --> ClienteController
+    FornecedorRoutes --> FornecedorController
+    ProdutoRoutes --> ProdutoController
+
+    ClienteController --> Cliente
+    FornecedorController --> Fornecedor
+    ProdutoController --> Produto
+
+```
+
+### Diagrama de Sequência - Cliente case
+
+```mermaid
+sequenceDiagram
+    actor User
+
+    User->>App: Request to /api/clientes (POST)
+    App->>ClienteRoutes: Route request
+    ClienteRoutes->>ClienteController: Call cadastrarCliente
+    ClienteController->>Cliente: Create new Cliente
+    Cliente->>Database: Save Cliente
+    Database-->>Cliente: Return saved Cliente
+    Cliente-->>ClienteController: Return saved Cliente
+    ClienteController-->>ClienteRoutes: Return response
+    ClienteRoutes-->>App: Return response
+    App-->>User: Return response (201 Created)
+
+```
+
+### Diagrama de Camada de Apresentação
+
+```mermaid
+classDiagram
+    direction LR
+
+    class database {
+        <<Database>>
+        Database (Sequelize)
+    }
+
+    class index {
+        <<Component>>
+        Index.js
+    }
+
+    class authMiddleware {
+        <<Middleware>>
+        Authentication.js
+    }
+    
+    class loginVerification {
+        <<Middleware>>
+        LoginVerification.js
+    }
+
+    class clienteValidator {
+        <<Validator>>
+        ClienteValidator.js
+    }
+
+    class clienteRoutes {
+        <<Routes>>
+        ClienteRoutes.js
+    }
+
+    class clienteController {
+        <<Controller>>
+        ClienteController.js
+    }
+
+    class clienteModel {
+        <<Model>>
+        Cliente.js
+    }
+
+    %% Repeat similar classes for Fornecedor and Produto
+    class fornecedorValidator {
+        <<Validator>>
+        FornecedorValidator.js
+    }
+    class produtoValidator {
+        <<Validator>>
+        ProdutoValidator.js
+    }
+    %% ... (other classes omitted for brevity)
+
+    %% Server connections
+    index --> clienteRoutes
+    index --> fornecedorRoutes
+    index --> produtoRoutes
+
+    %% Routes to controllers
+    clienteRoutes --> clienteController
+    fornecedorRoutes --> fornecedorController
+    produtoRoutes --> produtoController
+
+    %% Controllers to models
+    clienteController --> clienteModel
+    fornecedorController --> fornecedorModel
+    produtoController --> produtoModel
+
+    %% Models to database
+    clienteModel --> database
+    fornecedorModel --> database
+    produtoModel --> database
+
+    %% Middleware applied to routes
+    clienteRoutes ..> authMiddleware: uses
+    fornecedorRoutes ..> authMiddleware: uses
+    produtoRoutes ..> authMiddleware: uses
+
+    %% Validations before controllers
+    clienteRoutes ..> clienteValidator: validates with
+    fornecedorRoutes ..> fornecedorValidator: validates with
+    produtoRoutes ..> produtoValidator: validates with
+```
+
+
+
 ## Configuração do Projeto
 
 1. Clone o repositório:
